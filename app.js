@@ -3,6 +3,8 @@ const app = express()
 const port = process.env.PORT || 3300
 const path = require('path')
 
+
+app.use(express.static('public'))
 // view engine setup
 const ejs = require('ejs')
 const expressLayout = require('express-ejs-layouts')
