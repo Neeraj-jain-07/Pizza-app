@@ -46,7 +46,6 @@ app.use(session({
 
 app.use((req,res,next)=> {
     res.locals.session = req.session  // this module is not working 
-    console.log(req.session.cart) 
     next()
 })
 
