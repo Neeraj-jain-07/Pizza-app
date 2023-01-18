@@ -1,0 +1,50 @@
+[
+    {
+        "name":"Americana",
+        "image":"pizza.png",
+        "price":"399",
+        "size":"small"
+    },
+    {
+        "name":"Indian Special",
+        "image":"pizza.png",
+        "price":"499",
+        "size":"medium"
+    },
+    {
+       "name":"Carbonara",
+       "image":"pizza.png",
+       "price":"200",
+       "size":"small"
+    },
+    {
+        "name":"African",
+        "image":"pizza.png",
+        "price":"249",
+        "size":"medium"
+     },
+     {
+        "name":"Nepali",
+        "image":"pizza.png",
+        "price":"299",
+        "size":"medium"
+     },
+     {
+        "name":"British Pizza",
+        "image":"pizza.png",
+        "price":"399",
+        "size":"large"
+     },
+     {
+        "name":"Pepperoni",
+        "image":"pizza.png",
+        "price":"499",
+        "size":"large"
+     }     ,
+     {
+        "name":"Vegies pizza",
+        "image":"pizza.png",
+        "price":"600",
+        "size":"large"
+     }
+]
