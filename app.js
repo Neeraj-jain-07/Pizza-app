@@ -4,13 +4,15 @@ const app = express()
 const port = process.env.PORT || 3300
 const path = require('path')
 const connectDB = require('./app/dbConnection/conn')
-const session = require('express-session')
 const flash = require('express-flash')
+const session = require('express-session')
 const MongodbStore = require('connect-mongo')
+const passport = require('passport')
 const start = async() => {
    await connectDB()
 }
 start()
+
 app.use(express.static('public'))
 // view engine setup
 const ejs = require('ejs')
@@ -24,8 +26,6 @@ const { urlencoded } = require('express')
 // })
 app.use(flash())
 app.use(express.json())
-
-
 
 
 app.use(express.urlencoded({extended:false}));
@@ -43,11 +43,19 @@ app.use(session({
     } 
     )
 }))
+// passport configure 
+const passportInit= require('./app/config/passport')
+passportInit(passport);
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use((req,res,next)=> {
-    res.locals.session = req.session  // this module is not working 
+    res.locals.session = req.session  
+    res.locals.user= req.user
     next()
 })
+
+
 
 app.use(expressLayout)
 app.set('views',path.join(__dirname,'/resources/views'))
