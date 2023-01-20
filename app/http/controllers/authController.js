@@ -29,7 +29,8 @@ function authController(){
                     req.flash('error',info.message)
                     return next(err)
                 }
-                    return res.redirect('/');
+                const red = (req.user.role === 'admin' ? '/admin/orders' : '/customer/orders')
+                return res.redirect(red);
             })
         })(req,res,next)
 
@@ -74,6 +75,7 @@ function authController(){
         logout(req,res){
             req.logout(function(err) {
                 if (err) { return next(err); }
+
                 res.redirect('/login');
               });
         }

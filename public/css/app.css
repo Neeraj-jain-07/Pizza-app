@@ -63,3 +63,7 @@ section.cart .amount {
 .login a:hover {
   color: #b23301;
 }
+
+a.link {
+  color: #FE5F1E;
+}

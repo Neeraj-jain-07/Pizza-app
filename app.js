@@ -35,25 +35,23 @@ app.use(express.urlencoded({extended:false}));
 app.use(session({
     secret:process.env.SECRET_KEY,
     resave:false,
-    saveUninitialized:false,
-    cookie:{ maxAge : 1000 * 60 * 60 * 24 } , // 24 hours,
     store:MongodbStore.create({
         mongoUrl: 'mongodb+srv://NeerajJain:neeraj123@pizzaapp.xfwfdhk.mongodb.net/PizzaApp?retryWrites=true&w=majority'
         // collectionName:'raj'  => can give name from  here 
-    } 
-    )
+    } ),
+    saveUninitialized:false,
+    cookie:{ maxAge : 1000 * 60 * 60 * 24 }  // 24 hours,
+    
 }))
+
+
+
 // passport configure 
 const passportInit= require('./app/config/passport')
 passportInit(passport);
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use((req,res,next)=> {
-    res.locals.session = req.session  
-    res.locals.user= req.user
-    next()
-})
 
 
 
@@ -61,9 +59,15 @@ app.use(expressLayout)
 app.set('views',path.join(__dirname,'/resources/views'))
 app.set('view engine','ejs')
 
+
+
+app.use((req,res,next)=> {
+    res.locals.session = req.session  
+    res.locals.user= req.user
+    next()
+})
+
 require('./routes/web')(app)
-
-
 
 app.listen(port,() => {
    
