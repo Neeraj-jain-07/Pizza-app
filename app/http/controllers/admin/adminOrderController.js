@@ -9,10 +9,8 @@ function adminOrderController (){
              
                 if(req.xhr) {
                     // console.log(orders)
-                    console.log('1')
                     return res.json(orders)
                 } else {
-                    console.log('2')
                  return res.render('admin/order')
                 }
             })

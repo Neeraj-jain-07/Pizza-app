@@ -13,11 +13,11 @@ import moment from 'moment'
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then(res => {
-        console.log("res => ", res)
-        console.log("res.data => ",res.data)
         orders = res.data
         markup = generateMarkup(orders)
+        console.log('before ok')
         orderTableBody.innerHTML = markup
+        console.log('ok')
     }).catch(err => {
         console.log({message:err})
     })
@@ -32,7 +32,7 @@ import moment from 'moment'
       }
 
     function generateMarkup(orders) {
-        const e = orders.map(function(order) {
+        return orders.map(function(order) {
             return `
                 <tr>
                 <td class="border px-4 py-2 text-green-900">
@@ -81,7 +81,6 @@ import moment from 'moment'
             </tr>
         `
         }).join('')
-        return e;
     }
 }
 //     // Socket

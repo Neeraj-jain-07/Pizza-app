@@ -69,7 +69,17 @@ app.use((req,res,next)=> {
 
 require('./routes/web')(app)
 
-app.listen(port,() => {
+const server = app.listen(port,() => {
    
     console.log(`app is listening at ${port}`)
+})
+
+const io = require('socket.io')(server)
+io.on('connection',(socket)=>{
+    // join client
+   console.log(socket.id)  // socket automatic create a id 
+   socket.on('join',(orderId)=>{
+       console.log(orderId)
+      socket.join(orderId)
+   })
 })
