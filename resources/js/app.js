@@ -35,17 +35,20 @@ if(alertMsg){
   },4000)
 }
 
-initAdmin() 
+ 
 
 // // show status of order
 let statuses = document.querySelectorAll('.status-line')
-console.log(statuses)
 let hiddenInput = document.querySelector('#hiddenText');
-let order = hiddenInput ? hiddenInput.value : NULL;
+let order = hiddenInput ? hiddenInput.value : null;
 order=JSON.parse(order)
 let time = document.createElement("small")
 
 function updataStatus(order){
+     statuses.forEach((status)=>{
+      status.classList.remove('step-completed')
+      status.classList.remove('current')
+     })
      let stepComplete= true;
      statuses.forEach((status)=>{
        let dataProp = status.dataset.status
@@ -68,7 +71,24 @@ updataStatus(order);
 
 // socket
 let socket = io()
-// join order
-if(order){
-  socket.emit('join',`order_${order._id}`)
+initAdmin(socket)
+let adminAreaPath = window.location.pathname;
+console.log(adminAreaPath)
+if(adminAreaPath.includes('admin')){
+  socket.emit('join','adminRoom')
 }
+
+if(order){
+      socket.emit('join',`order_${order._id}`)
+}
+
+socket.on('orderUpdated',(data)=>{
+  const updateOrder = {...order}
+  updateOrder.updatedAt = moment().format()
+  updateOrder.status = data.status
+  updataStatus(updateOrder)
+  // console.log(data)
+})
+
+
+// for add socket in add new order

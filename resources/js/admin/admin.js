@@ -2,7 +2,7 @@ import axios from 'axios'
 import { message } from 'laravel-mix/src/Log'
 import moment from 'moment'
 
- function initAdmin() {
+ function initAdmin(socket) {
     const orderTableBody = document.querySelector('#orderTableBody')
     let orders = []
 
@@ -15,9 +15,7 @@ import moment from 'moment'
     }).then(res => {
         orders = res.data
         markup = generateMarkup(orders)
-        console.log('before ok')
         orderTableBody.innerHTML = markup
-        console.log('ok')
     }).catch(err => {
         console.log({message:err})
     })
@@ -82,6 +80,12 @@ import moment from 'moment'
         `
         }).join('')
     }
+    socket.on('orderPlaced',(order)=>{
+        console.log("new order")
+        orders.unshift(order);
+        orderTableBody.innerHTML = '';
+        orderTableBody.innerHTML = generateMarkup(orders)
+    })
 }
 //     // Socket
 //     socket.on('orderPlaced', (order) => {

@@ -8,6 +8,7 @@ const flash = require('express-flash')
 const session = require('express-session')
 const MongodbStore = require('connect-mongo')
 const passport = require('passport')
+const Emitter = require('events')
 const start = async() => {
    await connectDB()
 }
@@ -44,6 +45,9 @@ app.use(session({
     
 }))
 
+// Emitter setup
+const eventEmitter = new Emitter()
+app.set('eventEmitter',eventEmitter)
 
 
 // passport configure 
@@ -74,12 +78,23 @@ const server = app.listen(port,() => {
     console.log(`app is listening at ${port}`)
 })
 
+
+// socket io configure
+
 const io = require('socket.io')(server)
 io.on('connection',(socket)=>{
-    // join client
-   console.log(socket.id)  // socket automatic create a id 
-   socket.on('join',(orderId)=>{
-       console.log(orderId)
-      socket.join(orderId)
-   })
+            console.log(socket.id)  
+            socket.on('join',(orderId)=>{
+                // console.log(orderId)
+                socket.join(orderId)
+            })
+})
+
+// event emitter lister
+eventEmitter.on('orderUpdated',(data)=>{
+    io.to(`order_${data.id}`).emit('orderUpdated',data)
+})
+
+eventEmitter.on('orderPlaced',(data)=>{
+    io.to('adminRoom').emit('orderPlaced',data)
 })
