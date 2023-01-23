@@ -1,5 +1,5 @@
 import axios from "axios";
-import Noty from "noty";
+// import Noty from "noty";
 import moment from 'moment';
 import { initAdmin } from './admin/admin';
 
@@ -11,11 +11,11 @@ function updateCart(pizza) {
   axios.post('/update-cart', pizza).then(res => {
     console.log(res);
     cartCounter.innerText = res.data.TotalQty
-    new Noty({
-      type:'success',
-      timeout:1000,
-      text: "Item added in cart"
-    }).show();
+    // new Noty({
+    //   type:'success',
+    //   timeout:1000,
+    //   text: "Item added in cart"
+    // }).show();
   }
   )
 }
@@ -71,10 +71,14 @@ updataStatus(order);
 
 // socket
 let socket = io()
-initAdmin(socket)
+
+
+
+
 let adminAreaPath = window.location.pathname;
-console.log(adminAreaPath)
+// console.log(adminAreaPath)
 if(adminAreaPath.includes('admin')){
+  initAdmin(socket)
   socket.emit('join','adminRoom')
 }
 

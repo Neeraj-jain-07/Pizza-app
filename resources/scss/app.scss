@@ -194,4 +194,39 @@ section.status{
      font-size: 14px;
      margin-top: 2px;
 }
+
+table{
+     margin-bottom: 30px;
+}
+
+#order-done{
+     color: green;
+     font-weight: bold;
+     margin-left: 20px;
+}
  
+
+// media query
+@media (max-width:1060px) {
+     .container{
+          max-width: 90% !important;
+     }
+     table{
+          display: block;
+          overflow-x:auto;
+          white-space: nowrap;
+          
+     }
+}
+
+@media (max-width:768px) {
+     .status-box ul li span::before{
+          font-size: 34px;
+     }
+}
+
+@media (max-width:520px) {
+     .status-box ul {
+          margin: 84px 10px 84px 84px;
+      }
+}
